@@ -15,8 +15,8 @@ class Hash
   #
   #   hash.camelize_keys
   #   # => {:firstName=>"Surim", :lastName=>"Kim"}
-  def camelize_keys
-    transform_keys { |key| camelize_key(key) }
+  def camelize_keys(first_letter = :lower)
+    transform_keys { |key| camelize_key(key, first_letter) }
   end
 
   # Returns a new hash with all keys converted to underscore.
@@ -39,8 +39,8 @@ class Hash
   #
   #  hash.deep_camelize_keys
   #  # => {:person=>{:firstName=>"Surim", :lastName=>"Kim"}}
-  def deep_camelize_keys
-    deep_transform_keys_in_object(self) { |key| camelize_key(key) }
+  def deep_camelize_keys(first_letter = :lower)
+    deep_transform_keys_in_object(self) { |key| camelize_key(key, first_letter) }
   end
 
   private
@@ -90,11 +90,11 @@ class Hash
     word
   end
 
-  def camelize_key(key)
+  def camelize_key(key, first_letter)
     if key.is_a?(Symbol)
-      camelize(key.to_s, :lower).to_sym
+      camelize(key.to_s, first_letter).to_sym
     elsif key.is_a?(String)
-      camelize(key, :lower)
+      camelize(key, first_letter)
     else
       key
     end

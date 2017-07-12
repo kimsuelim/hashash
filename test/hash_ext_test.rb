@@ -2,9 +2,12 @@ require "test_helper"
 
 class HashExtTest < Minitest::Spec
   def setup
-    @camelcase_strings = { "aA" => 1, "bB" => 2 }
-    @camelcase_symbols = { aA: 1, bB: 2 }
-    @camelcase_mixed = { :aA => 1, "bB" => 2 }
+    @lower_camelcase_strings = { "aA" => 1, "bB" => 2 }
+    @lower_camelcase_symbols = { aA: 1, bB: 2 }
+    @lower_camelcase_mixed = { :aA => 1, "bB" => 2 }
+    @upper_camelcase_strings = { "AA" => 1, "BB" => 2 }
+    @upper_camelcase_symbols = { AA: 1, BB: 2 }
+    @upper_camelcase_mixed = { :AA => 1, "BB" => 2 }
     @underscore_strings = { "a_a" => 1, "b_b" => 2 }
     @underscore_symbols = { a_a: 1, b_b: 2 }
     @underscore_mixed = { :a_a => 1, "b_b" => 2 }
@@ -25,15 +28,19 @@ class HashExtTest < Minitest::Spec
   end
 
   it "underscore_keys" do
-    @camelcase_strings.underscore_keys.must_equal @underscore_strings
-    @camelcase_symbols.underscore_keys.must_equal @underscore_symbols
-    @camelcase_mixed.underscore_keys.must_equal @underscore_mixed
+    @lower_camelcase_strings.underscore_keys.must_equal @underscore_strings
+    @lower_camelcase_symbols.underscore_keys.must_equal @underscore_symbols
+    @lower_camelcase_mixed.underscore_keys.must_equal @underscore_mixed
   end
 
   it "camelize_keys" do
-    @underscore_strings.camelize_keys.must_equal @camelcase_strings
-    @underscore_symbols.camelize_keys.must_equal @camelcase_symbols
-    @underscore_mixed.camelize_keys.must_equal @camelcase_mixed
+    @underscore_strings.camelize_keys.must_equal @lower_camelcase_strings
+    @underscore_symbols.camelize_keys.must_equal @lower_camelcase_symbols
+    @underscore_mixed.camelize_keys.must_equal @lower_camelcase_mixed
+
+    @underscore_strings.camelize_keys(:upper).must_equal @upper_camelcase_strings
+    @underscore_symbols.camelize_keys(:upper).must_equal @upper_camelcase_symbols
+    @underscore_mixed.camelize_keys(:upper).must_equal @upper_camelcase_mixed
   end
 
   it "deep_underscore_keys" do

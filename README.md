@@ -4,7 +4,7 @@
 [![Gem Version](https://badge.fury.io/rb/hashash.svg)](https://badge.fury.io/rb/hashash)
 
 Hashash is a collection of classes and mixins that make it more useful when working with JSON APIs.
-Convert underscore to camelCase, convert camelcase to underscore, convert hashes to the objects.
+Convert underscore to camelcase, convert camelcase to underscore, convert hashes to the objects.
 
 ## Installation
 
@@ -44,21 +44,37 @@ hash.deep_underscore_keys
 ## Camelize keys when working with JSON APIs
 
 ### camelize_keys
-converts all keys in a hash to camelCase.
+converts all keys in a hash to camelcase.
 
+#### lowerCamelCase
 ```ruby
 hash = { first_name: "Surim", last_name: "Kim" }
 hash.camelize_keys
 # => {:firstName=>"Surim", :lastName=>"Kim"}
 ```
 
-### deep_camelize_keys
-recursively converts all keys in a hash to camelCase.
+#### UpperCamelCase
+```ruby
+hash = { first_name: "Surim", last_name: "Kim" }
+hash.camelize_keys(:upper)
+# => {:FirstName=>"Surim", :LastName=>"Kim"}
+```
 
+### deep_camelize_keys
+recursively converts all keys in a hash to camelcase.
+
+#### lowerCamelCase
 ```ruby
 hash = { person: { first_name: "Surim", last_name: "Kim" } }
 hash.deep_camelize_keys
 # => {:person=>{:firstName=>"Surim", :lastName=>"Kim"}}
+```
+
+#### UpperCamelCase
+```ruby
+hash = { person: { first_name: "Surim", last_name: "Kim" } }
+hash.deep_camelize_keys(:upper)
+# => {:Person=>{:FirstName=>"Surim", :LastName=>"Kim"}}
 ```
 
 ## Converts hashes to the objects.
